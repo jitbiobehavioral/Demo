@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!-- Copyright (c) 2026 JIT Biobehavioral Inc. All rights reserved. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cortex-Zero Interactive Simulator</title>
+    <style>
+        :root {
+            --primary: #0F172A;
+            --sky-blue: #38BDF8;
+            --danger: #EF4444;
+            --success: #10B981;
+            --crisis: #000000;
+        }
+
+        body {
+            font-family: -apple-system, system-ui, sans-serif;
+            margin: 0;
+            background: #111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        .phone-mockup {
+            width: 340px;
+            height: 720px;
+            background: #111;
+            border-radius: 50px;
+            padding: 12px;
+            border: 4px solid #333;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .phone-screen {
+            background: #fff;
+            width: 100%;
+            height: 100%;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            text-align: left;
+            color: #000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-header {
+            background: var(--primary);
+            color: #fff;
+            padding: 40px 20px 20px 20px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .app-body {
+            padding: 24px;
+            flex-grow: 1;
+        }
+
+        .instruction {
+            font-size: 0.9rem;
+            color: #64748B;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .journal-box {
+            background: #F1F5F9;
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid #E2E8F0;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            background: transparent;
+            border: none;
+            resize: none;
+            font-size: 1.1rem;
+            font-family: inherit;
+        }
+
+        textarea:focus { outline: none; }
+
+        .demo-hint {
+            margin-top: 24px;
+            background: #E0F2FE;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            color: #0369A1;
+            line-height: 1.6;
+        }
+
+        /* Overlays */
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        #hijack-screen { background: var(--danger); color: #fff; animation: flashIn 0.3s; }
+        #crisis-screen { background: var(--crisis); color: #fff; border: 8px solid var(--danger); }
+        #victory-screen { background: var(--success); color: #fff; }
+
+        @keyframes flashIn { from { background: #fff; } to { background: var(--danger); } }
+
+        .btn-action {
+            background: #fff;
+            color: var(--primary);
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            width: 100%;
+            margin-top: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .patent-note {
+            margin-top: 30px;
+            font-size: 0.7rem;
+            opacity: 0.4;
+            text-align: center;
+        }
+
+        @media (max-height: 750px) {
+            .phone-mockup { transform: scale(0.8); margin: -60px auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-link">← EXIT SIMULATOR</a>
+
+    <div class="phone-mockup">
+        <div class="phone-screen">
+
+            <!-- Intercept Overlay -->
+            <div id="hijack-screen" class="overlay">
+                <h2 style="font-size: 2rem;">⚠️ VANGUARD INTERCEPT</h2>
+                <p>High-risk trigger detected. Device locked for clinical grounding.</p>
+                <button class="btn-action" onclick="resetDemo()">ACKNOWLEDGE & RESET</button>
+            </div>
+
+            <!-- Crisis Overlay -->
+            <div id="crisis-screen" class="overlay">
+                <h2 style="font-size: 2rem; color: #ff4444;">CRITICAL ALERT</h2>
+                <p>Extreme crisis detected. 911 Dialer pre-armed and Support Squad notified.</p>
+                <button class="btn-action" style="background: #ff4444; color: #fff;" onclick="alert('System: Initializing Emergency Protocol...')">🚨 CALL 911 NOW</button>
+                <button class="btn-action" style="background: transparent; color: #aaa; border: 1px solid #444;" onclick="resetDemo()">DISMISS (I AM SAFE)</button>
+            </div>
+
+            <!-- Victory Overlay -->
+            <div id="victory-screen" class="overlay">
+                <h2 style="font-size: 2rem;">🏆 VICTORY VAULT</h2>
+                <p>Growth milestone logged. Your resilience score has increased by 15 points.</p>
+                <button class="btn-action" onclick="resetDemo()">CONTINUE</button>
+            </div>
+
+            <div class="app-header">CORTEX-ZERO</div>
+
+            <div class="app-body">
+                <p class="instruction">Type into the secure journal below to test the autonomous logic.</p>
+
+                <div class="journal-box">
+                    <textarea id="journalInput" placeholder="Enter reflection..." onkeyup="analyzeInput()"></textarea>
+                </div>
+
+                <div class="demo-hint">
+                    <strong>SIMULATION TRIGGERS:</strong><br>
+                    • Type <b>"relapse"</b> to test the Intercept.<br>
+                    • Type <b>"suicide"</b> to test 911 Protocol.<br>
+                    • Type <b>"sober"</b> to test Victory Vault.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="patent-note">Proprietary Technology: CA Patent App #3319225</p>
+
+    <script>
+        function analyzeInput() {
+            const val = document.getElementById('journalInput').value.toLowerCase();
+            if (val.includes('suicide') || val.includes('kill')) {
+                document.getElementById('crisis-screen').style.display = 'flex';
+            } else if (val.includes('relapse') || val.includes('craving') || val.includes('score')) {
+                document.getElementById('hijack-screen').style.display = 'flex';
+            } else if (val.includes('sober') || val.includes('clean') || val.includes('success')) {
+                document.getElementById('victory-screen').style.display = 'flex';
+            }
+        }
+
+        function resetDemo() {
+            document.getElementById('hijack-screen').style.display = 'none';
+            document.getElementById('crisis-screen').style.display = 'none';
+            document.getElementById('victory-screen').style.display = 'none';
+            document.getElementById('journalInput').value = '';
+        }
+    </script>
+</body>
+</html>

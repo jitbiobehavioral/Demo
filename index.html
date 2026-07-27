@@ -70,6 +70,16 @@
             flex-shrink: 0;
         }
 
+        .node-glow {
+            animation: pulseGlow 2s infinite ease-in-out;
+            transform-origin: center;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { fill-opacity: 0.2; transform: scale(1); }
+            50% { fill-opacity: 0.6; transform: scale(1.3); }
+        }
+
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
@@ -229,7 +239,29 @@
     <header>
         <div class="logo">
             <svg width="40" height="40" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg" class="logo-svg">
+                <!-- Vanguard Shield Base -->
                 <path d="M 54 4 L 98 15 C 98 45 88 85 54 104 C 20 85 10 45 10 15 Z" fill="#0f172a" stroke="#0e7490" stroke-width="4"/>
+
+                <!-- Inner Neural Folds (The Cortex) -->
+                <path d="M 54 24 C 35 24, 25 40, 25 54 C 25 68, 35 84, 54 84" fill="none" stroke="#e2e8f0" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+                <path d="M 54 24 C 73 24, 83 40, 83 54 C 83 68, 73 84, 54 84" fill="none" stroke="#e2e8f0" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+
+                <!-- Synaptic Web -->
+                <path d="M 40 40 L 68 68 M 68 40 L 40 68 M 36 54 L 72 54 M 54 34 L 54 74" fill="none" stroke="#22d3ee" stroke-width="1.5" stroke-opacity="0.6"/>
+
+                <!-- Pulsing Nodes -->
+                <circle cx="40" cy="40" r="5" fill="#0ea5e9" fill-opacity="0.3" class="node-glow"/>
+                <circle cx="68" cy="40" r="5" fill="#0ea5e9" fill-opacity="0.3" class="node-glow"/>
+                <circle cx="40" cy="68" r="5" fill="#0ea5e9" fill-opacity="0.3" class="node-glow"/>
+                <circle cx="68" cy="68" r="5" fill="#0ea5e9" fill-opacity="0.3" class="node-glow"/>
+
+                <circle cx="40" cy="40" r="2" fill="#22d3ee"/>
+                <circle cx="68" cy="40" r="2" fill="#22d3ee"/>
+                <circle cx="40" cy="68" r="2" fill="#22d3ee"/>
+                <circle cx="68" cy="68" r="2" fill="#22d3ee"/>
+
+                <!-- Central Core Lock -->
+                <circle cx="54" cy="54" r="8" fill="#ffffff" fill-opacity="0.2"/>
                 <circle cx="54" cy="54" r="5" fill="#ffffff"/>
             </svg>
             JIT CORTEX-ZERO
@@ -280,6 +312,21 @@
     </section>
 
     <footer>
+        <div class="footer-logo" style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 30px; color: #fff; font-size: 24px; font-weight: 800;">
+            <svg width="60" height="60" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg" class="logo-svg">
+                <rect width="108" height="108" fill="#0f172a" rx="12"/>
+                <circle cx="54" cy="54" r="48" fill="#1e293b"/>
+                <circle cx="54" cy="54" r="40" fill="none" stroke="#0e7490" stroke-width="2"/>
+                <path d="M 54 24 C 35 24, 25 40, 25 54 C 25 68, 35 84, 54 84" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
+                <path d="M 54 24 C 73 24, 83 40, 83 54 C 83 68, 73 84, 54 84" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="40" cy="40" r="5" fill="#0ea5e9" fill-opacity="0.3" class="node-glow"/>
+                <circle cx="68" cy="40" r="5" fill="#0ea5e9" fill-opacity="0.3" class="node-glow"/>
+                <circle cx="40" cy="68" r="5" fill="#0ea5e9" fill-opacity="0.3" class="node-glow"/>
+                <circle cx="68" cy="68" r="5" fill="#0ea5e9" fill-opacity="0.3" class="node-glow"/>
+                <circle cx="54" cy="54" r="4" fill="#ffffff"/>
+            </svg>
+            JIT BIOBEHAVIORAL
+        </div>
         <p class="footer-legal">Intellectual Property: CA Patent App #3319225</p>
         <p>&copy; 2026 JIT Biobehavioral Inc. All rights reserved.</p>
         <p style="font-size: 0.8rem; margin-top: 20px;">Contact: gerald@jitbiobehavioralinc.com</p>
